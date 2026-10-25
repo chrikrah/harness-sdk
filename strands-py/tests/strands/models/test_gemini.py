@@ -1920,7 +1920,17 @@ class TestCountTokens:
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     "finish_reason,stop_reason",
-    [("STOP", "end_turn"), ("SAFETY", "guardrail_intervened"), ("RECITATION", "content_filtered")],
+    [
+        ("STOP", "end_turn"),
+        ("SAFETY", "guardrail_intervened"),
+        ("BLOCKLIST", "guardrail_intervened"),
+        ("PROHIBITED_CONTENT", "guardrail_intervened"),
+        ("SPII", "guardrail_intervened"),
+        ("IMAGE_SAFETY", "guardrail_intervened"),
+        ("IMAGE_PROHIBITED_CONTENT", "guardrail_intervened"),
+        ("RECITATION", "content_filtered"),
+        ("IMAGE_RECITATION", "content_filtered"),
+    ],
 )
 async def test_stream_response_without_usage_metadata(
     gemini_client, model, messages, agenerator, alist, finish_reason, stop_reason
